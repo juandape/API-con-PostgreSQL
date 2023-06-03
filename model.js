@@ -16,8 +16,10 @@ async function getContactsById(id) {
   return record;
 }
 
-async function createContact(contact) {
-  const record = await prisma.Contacts.insert(contact);
+async function createContact(data) {
+  const record = await prisma.Contacts.create({
+    data
+  });
   return record;
 }
 

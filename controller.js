@@ -21,12 +21,12 @@ async function handleGetByIdContact(req, res) {
 }
 
 async function handleCreateContact(req, res) {
-  const contact = req.body;
-  const { name, number } = contact;
-  const record = await createContact(contact);
-  if (!number) {
+  const data = req.body;
+  const { name, phone } = data;
+  const record = await createContact(data);
+  if (!phone) {
     return res.status(400).json({ message: "Number is empty" });
-  }else if (name === contact.name) {
+  }else if (name === data.name) {
     return res.status(400).json({ message: "Contact already exist" });
   }else{
   return res.status(201).json(record);
