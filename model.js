@@ -24,10 +24,6 @@ async function createContact(data) {
 }
 
 async function editContact(id, contact) {
-  // const contactEdit = {
-  //   id,
-  //   ...contact,
-  // };
   const record = await prisma.Contacts.update({
     where: { id },
     data: { ...contact }
@@ -36,7 +32,9 @@ async function editContact(id, contact) {
 }
 
 async function deleteContact(id) {
-  const record = await prisma.Contacts.remove(id);
+  const record = await prisma.Contacts.delete({
+    where: { id }
+  });
   return record;
 }
 
