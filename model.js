@@ -24,11 +24,14 @@ async function createContact(data) {
 }
 
 async function editContact(id, contact) {
-  const contactEdit = {
-    id,
-    ...contact,
-  };
-  const record =  await prisma.Contacts.update(contactEdit);
+  // const contactEdit = {
+  //   id,
+  //   ...contact,
+  // };
+  const record = await prisma.Contacts.update({
+    where: { id },
+    data: { ...contact }
+  });
   return record;
 }
 
