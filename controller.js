@@ -4,27 +4,26 @@ const {
   createContact,
   editContact,
   deleteContact,
-  getLength,
 } = require("./model");
 
-function handleGetAllContacts(req, res) {
-  const records = getAllContacts();
+async function handleGetAllContacts(req, res) {
+  const records = await getAllContacts();
   res.status(200).json(records);
 }
 
-function handleGetByIdContact(req, res) {
+async function handleGetByIdContact(req, res) {
   const { id } = req.params;
-  const record = getContactsById(id);
+  const record = await getContactsById(id);
   if (Object.keys(record).length === 0) {
     return res.status(404).json({ message: "Contact not found" });
   }
   return res.status(200).json(record);
 }
 
-function handleCreateContact(req, res) {
+async function handleCreateContact(req, res) {
   const contact = req.body;
   const { name, number } = contact;
-  const record = createContact(contact);
+  const record = await createContact(contact);
   if (!number) {
     return res.status(400).json({ message: "Number is empty" });
   }else if (name === contact.name) {
@@ -34,19 +33,19 @@ function handleCreateContact(req, res) {
   }
 }
 
-function handleEditContact(req, res) {
+async function handleEditContact(req, res) {
   const { id } = req.params;
   const contact = req.body;
-  const record = editContact(id, contact);
+  const record = await editContact(id, contact);
   if (Object.keys(record).length === 0) {
     return res.status(404).json({ message: "Contact not found" });
   }
   return res.status(202).json(record);
 }
 
-function handleDeleteContact(req, res) {
+async function handleDeleteContact(req, res) {
   const { id } = req.params;
-  deleteContact(id);
+  await deleteContact(id);
   return res.status(204).json({ message: "Contact Deleted" });
 }
 
@@ -56,5 +55,4 @@ module.exports = {
   handleCreateContact,
   handleEditContact,
   handleDeleteContact,
-  getLength,
 };

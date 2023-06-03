@@ -1,6 +1,6 @@
-const express = require("express");
-const morganBody = require("morgan-body");
-const bodyParser = require("body-parser");
+const express = require('express');
+const morganBody = require('morgan-body');
+const bodyParser = require('body-parser');
 
 const {
   handleGetAllContacts,
@@ -8,8 +8,7 @@ const {
   handleCreateContact,
   handleEditContact,
   handleDeleteContact,
-  getLength,
-} = require("./controller");
+} = require('./controller');
 
 const app = express();
 const port = 8080;
@@ -19,19 +18,15 @@ app.use(express.json());
 app.use(bodyParser.json());
 morganBody(app);
 
-app.get("/api/contacts", handleGetAllContacts);
+app.get('/api/contacts', handleGetAllContacts);
 
-app.get("/info", (req, res) =>
-  res.send(`Phonebook has info for ${getLength()} contacts --  ${date}`)
-);
+app.get('/api/contacts/:id', handleGetByIdContact);
 
-app.get("/api/contacts/:id", handleGetByIdContact);
+app.post('/api/contacts', handleCreateContact);
 
-app.post("/api/contacts", handleCreateContact);
+app.patch('/api/contacts/:id', handleEditContact);
 
-app.patch("/api/contacts/:id", handleEditContact);
-
-app.delete("/api/contacts/:id", handleDeleteContact);
+app.delete('/api/contacts/:id', handleDeleteContact);
 
 app.listen(port, () =>
   console.log(`Server running at http://localhost:${port}!`)
